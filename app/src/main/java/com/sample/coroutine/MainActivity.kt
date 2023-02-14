@@ -2,6 +2,7 @@ package com.sample.coroutine
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelLazy
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -16,6 +17,8 @@ class MainActivity : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate")
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 //        sampleSuspendFunc()
@@ -24,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sampleSuspendFunc() {
+        Log.d(TAG, "sampleSuspendFunc")
+
         GlobalScope.launch {
             val time = measureTimeMillis {
                 val one = sampleOne()
@@ -36,14 +41,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun sampleOne(): Int {
+        Log.d(TAG, "sampleOne")
+
         println( "sampleOne"+System.currentTimeMillis())
         delay(1000L) // pretend we are doing something useful here
         return 10
     }
 
     private suspend fun sampleTwo(): Int {
+        Log.d(TAG, "sampleTwo")
+
         println( "sampleTwo"+System.currentTimeMillis())
         delay(1000L) // pretend we are doing something useful here, too
         return 10
+    }
+
+    companion object {
+        private const val TAG = "CRTNSMPL: MainActivity"
     }
 }

@@ -1,5 +1,6 @@
 package com.sample.coroutine
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
@@ -12,6 +13,8 @@ class MainViewModel :ViewModel() {
     private val ioScope by lazy { CoroutineScope(job + Dispatchers.IO) }
 
     fun exampleMethodUsingLaunch() {
+        Log.d(TAG, "exampleMethodUsingLaunch")
+
         // Starts a new coroutine within the scope
         ioScope.launch {
             // New coroutine that can call suspend functions
@@ -24,11 +27,15 @@ class MainViewModel :ViewModel() {
     }
 
     suspend fun fetchData(): String {
+        Log.d(TAG, "fetchData")
+
         delay(3000L) // simulate long running task
         return "Did something that was 3 seconds long"
     }
 
-    fun exampleMethodUsingAsync(){
+    fun exampleMethodUsingAsync() {
+        Log.d(TAG, "exampleMethodUsingAsync")
+
         println("First statement of Async")
 
         viewModelScope.launch {
@@ -44,15 +51,22 @@ class MainViewModel :ViewModel() {
     }
 
     private suspend fun sampleOne(): Boolean {
+        Log.d(TAG, "sampleOne")
+
         delay(4000L)
         return true
     }
+
     private suspend fun sampleTwo(): Boolean {
+        Log.d(TAG, "sampleTwo")
+
         delay(3000L)
         return false
     }
 
-    fun sampleRunBlocking(){
+    fun sampleRunBlocking() {
+        Log.d(TAG, "sampleRunBlocking")
+
         println("First statement of runBlocking")
         runBlocking {
             delay(3000L)
@@ -63,8 +77,13 @@ class MainViewModel :ViewModel() {
     }
 
     override fun onCleared() {
+        Log.d(TAG, "onCleared")
+
         super.onCleared()
         ioScope.cancel()
     }
 
+    companion object {
+        private const val TAG = "CRTNSMPL: MainViewModel"
+    }
 }
