@@ -5,8 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 
-class MainViewModel :ViewModel() {
-
+class MainViewModel : ViewModel() {
     // Job and Dispatcher are combined into a CoroutineContext which
     // will be discussed shortly
     private val job =  SupervisorJob()
@@ -20,7 +19,7 @@ class MainViewModel :ViewModel() {
             // New coroutine that can call suspend functions
             fetchData()
             //To Switch the context of Dispatchers
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
             }
         }
         viewModelScope
@@ -30,30 +29,33 @@ class MainViewModel :ViewModel() {
         Log.d(TAG, "fetchData")
 
         delay(3000L) // simulate long running task
+
         return "Did something that was 3 seconds long"
     }
 
     fun exampleMethodUsingAsync() {
         Log.d(TAG, "exampleMethodUsingAsync")
 
-        println("First statement of Async")
+        Log.d(TAG,"exampleMethodUsingAsync: First statement of Async")
 
         viewModelScope.launch {
-                val one = async { sampleOne()}
-                val two = async { sampleTwo()}
-            if(one.await() && two.await()){
-                println("Both returned true")
-            }else {
-                println("Someone returned false")
+                val one = async { sampleOne() }
+                val two = async { sampleTwo() }
+            if (one.await() && two.await()) {
+                Log.d(TAG, "exampleMethodUsingAsync: Both returned true")
+            } else {
+                Log.d(TAG, "exampleMethodUsingAsync: Someone returned false")
             }
         }
-        println("Last statement of Async")
+
+        Log.d(TAG, "exampleMethodUsingAsync: Last statement of Async")
     }
 
     private suspend fun sampleOne(): Boolean {
         Log.d(TAG, "sampleOne")
 
         delay(4000L)
+
         return true
     }
 
@@ -61,18 +63,22 @@ class MainViewModel :ViewModel() {
         Log.d(TAG, "sampleTwo")
 
         delay(3000L)
+
         return false
     }
 
     fun sampleRunBlocking() {
         Log.d(TAG, "sampleRunBlocking")
 
-        println("First statement of runBlocking")
+        Log.d(TAG, "sampleRunBlocking: First statement of runBlocking")
+
         runBlocking {
             delay(3000L)
-            println("Middle  statement of runBlocking")
+
+            Log.d(TAG, "sampleRunBlocking: Middle  statement of runBlocking")
         }
-        println("Last statement of runBlocking")
+
+        Log.d(TAG, "sampleRunBlocking: Last statement of runBlocking")
 
     }
 

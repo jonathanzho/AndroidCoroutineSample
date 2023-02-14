@@ -12,7 +12,7 @@ import kotlin.system.measureTimeMillis
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by ViewModelLazy(
         MainViewModel::class,
-        {viewModelStore },
+        { viewModelStore },
         { defaultViewModelProviderFactory }
     )
 
@@ -21,9 +21,28 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 //        sampleSuspendFunc()
         viewModel.exampleMethodUsingAsync()
 //        viewModel.sampleRunBlocking()
+    }
+
+    override fun onResume() {
+        Log.d(TAG, "onResume")
+
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log.d(TAG, "onPause")
+
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        Log.d(TAG, "onDestroy")
+
+        super.onDestroy()
     }
 
     private fun sampleSuspendFunc() {
@@ -33,26 +52,28 @@ class MainActivity : AppCompatActivity() {
             val time = measureTimeMillis {
                 val one = sampleOne()
                 val two = sampleTwo()
-                println("The answer is ${one + two}")
+                Log.d(TAG, "sampleSuspendFunc: The answer is ${one + two}")
             }
-            println("Completed in $time ms")
+
+            Log.d(TAG, "sampleSuspendFunc: Completed in $time ms")
         }
-        println("EOF")
+
+        Log.d(TAG, "sampleSuspendFunc: EOF")
     }
 
     private suspend fun sampleOne(): Int {
-        Log.d(TAG, "sampleOne")
+        Log.d(TAG, "sampleOne" + System.currentTimeMillis())
 
-        println( "sampleOne"+System.currentTimeMillis())
         delay(1000L) // pretend we are doing something useful here
+
         return 10
     }
 
     private suspend fun sampleTwo(): Int {
-        Log.d(TAG, "sampleTwo")
+        Log.d(TAG, "sampleTwo" + System.currentTimeMillis())
 
-        println( "sampleTwo"+System.currentTimeMillis())
         delay(1000L) // pretend we are doing something useful here, too
+
         return 10
     }
 
