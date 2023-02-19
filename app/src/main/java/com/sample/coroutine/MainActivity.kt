@@ -22,9 +22,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        sampleSuspendFunc()
-        viewModel.exampleMethodUsingAsync()
-//        viewModel.sampleRunBlocking()
+        // Test case 1:
+        //sampleSuspendFunc()
+
+        // Test case 2:
+        //viewModel.exampleMethodUsingAsync()
+
+        // Test case 3:
+        viewModel.sampleRunBlocking()
     }
 
     override fun onResume() {
@@ -45,6 +50,10 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    /*
+    Test case 1:
+    This is to show how suspend funcs work:
+     */
     private fun sampleSuspendFunc() {
         Log.d(TAG, "sampleSuspendFunc")
 
@@ -58,6 +67,7 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "sampleSuspendFunc: Completed in $time ms")
         }
 
+        // This should go before the above block:
         Log.d(TAG, "sampleSuspendFunc: EOF")
     }
 

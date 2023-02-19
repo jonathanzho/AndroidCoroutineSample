@@ -33,6 +33,10 @@ class MainViewModel : ViewModel() {
         return "Did something that was 3 seconds long"
     }
 
+    /*
+    Test case 2:
+    async
+     */
     fun exampleMethodUsingAsync() {
         Log.d(TAG, "exampleMethodUsingAsync")
 
@@ -67,6 +71,10 @@ class MainViewModel : ViewModel() {
         return false
     }
 
+    /*
+    Test case 3:
+    runBlocking
+     */
     fun sampleRunBlocking() {
         Log.d(TAG, "sampleRunBlocking")
 
