@@ -23,13 +23,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Test case 1:
-        //sampleSuspendFunc()
+        sampleSuspendFunc()
 
         // Test case 2:
         //viewModel.exampleMethodUsingAsync()
 
         // Test case 3:
-        viewModel.sampleRunBlocking()
+        //viewModel.sampleRunBlocking()
     }
 
     override fun onResume() {
@@ -72,19 +72,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun sampleOne(): Int {
-        Log.d(TAG, "sampleOne" + System.currentTimeMillis())
+        Log.d(TAG, "sampleOne: currentTimeMillis=" + System.currentTimeMillis())
 
         delay(1000L) // pretend we are doing something useful here
 
-        return 10
+        return 1000
     }
 
     private suspend fun sampleTwo(): Int {
-        Log.d(TAG, "sampleTwo" + System.currentTimeMillis())
+        Log.d(TAG, "sampleTwo: currentTimeMillis=" + System.currentTimeMillis())
 
-        delay(1000L) // pretend we are doing something useful here, too
+        delay(2000L) // pretend we are doing something useful here, too
 
-        return 10
+        return 2000
     }
 
     companion object {
