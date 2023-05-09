@@ -3,68 +3,44 @@ package com.sample.coroutine
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainViewModel : ViewModel() {
-    // Job and Dispatcher are combined into a CoroutineContext which
-    // will be discussed shortly
-    private val job =  SupervisorJob()
-    private val ioScope by lazy { CoroutineScope(job + Dispatchers.IO) }
-
-    fun exampleMethodUsingLaunch() {
-        Log.d(TAG, "exampleMethodUsingLaunch")
-
-        // Starts a new coroutine within the scope
-        ioScope.launch {
-            // New coroutine that can call suspend functions
-            fetchData()
-            //To Switch the context of Dispatchers
-            withContext(Dispatchers.Main) {
-            }
-        }
-        viewModelScope
-    }
-
-    suspend fun fetchData(): String {
-        Log.d(TAG, "fetchData")
-
-        delay(3000L) // simulate long running task
-
-        return "Did something that was 3 seconds long"
-    }
-
     /*
     Test case 2:
     async
      */
-    fun exampleMethodUsingAsync() {
-        Log.d(TAG, "exampleMethodUsingAsync")
+    fun tc2ExampleMethodUsingAsync() {
+        Log.d(TAG, "tc2ExampleMethodUsingAsync")
 
-        Log.d(TAG,"exampleMethodUsingAsync: First statement of Async")
+        Log.d(TAG,"tc2ExampleMethodUsingAsync: First statement of Async")
 
         viewModelScope.launch {
-                val one = async { sampleOne() }
-                val two = async { sampleTwo() }
+                val one = async { tc2SampleOne() }
+                val two = async { tc2SampleTwo() }
             if (one.await() && two.await()) {
-                Log.d(TAG, "exampleMethodUsingAsync: Both returned true")
+                Log.d(TAG, "tc2ExampleMethodUsingAsync: Both returned true")
             } else {
-                Log.d(TAG, "exampleMethodUsingAsync: Someone returned false")
+                Log.d(TAG, "tc2ExampleMethodUsingAsync: Someone returned false")
             }
         }
 
-        Log.d(TAG, "exampleMethodUsingAsync: Last statement of Async")
+        Log.d(TAG, "tc2ExampleMethodUsingAsync: Last statement of Async")
     }
 
-    private suspend fun sampleOne(): Boolean {
-        Log.d(TAG, "sampleOne")
+    private suspend fun tc2SampleOne(): Boolean {
+        Log.d(TAG, "tc2SampleOne")
 
         delay(4000L)
 
         return true
     }
 
-    private suspend fun sampleTwo(): Boolean {
-        Log.d(TAG, "sampleTwo")
+    private suspend fun tc2SampleTwo(): Boolean {
+        Log.d(TAG, "tc2SampleTwo")
 
         delay(3000L)
 
@@ -75,26 +51,19 @@ class MainViewModel : ViewModel() {
     Test case 3:
     runBlocking
      */
-    fun sampleRunBlocking() {
-        Log.d(TAG, "sampleRunBlocking")
+    fun tc3SampleRunBlocking() {
+        Log.d(TAG, "tc3SampleRunBlocking")
 
-        Log.d(TAG, "sampleRunBlocking: First statement of runBlocking")
+        Log.d(TAG, "tc3SampleRunBlocking: First statement of runBlocking")
 
         runBlocking {
             delay(3000L)
 
-            Log.d(TAG, "sampleRunBlocking: Middle  statement of runBlocking")
+            Log.d(TAG, "tc3SampleRunBlocking: Middle  statement of runBlocking")
         }
 
-        Log.d(TAG, "sampleRunBlocking: Last statement of runBlocking")
+        Log.d(TAG, "tc3SampleRunBlocking: Last statement of runBlocking")
 
-    }
-
-    override fun onCleared() {
-        Log.d(TAG, "onCleared")
-
-        super.onCleared()
-        ioScope.cancel()
     }
 
     companion object {

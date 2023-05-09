@@ -1,8 +1,8 @@
 package com.sample.coroutine
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelLazy
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -23,13 +23,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Test case 1:
-        sampleSuspendFunc()
+        tc1SampleSuspendFunc()
+        Thread.sleep(10000L)
 
         // Test case 2:
-        //viewModel.exampleMethodUsingAsync()
+        viewModel.tc2ExampleMethodUsingAsync()
+        Thread.sleep(10000L)
 
         // Test case 3:
-        //viewModel.sampleRunBlocking()
+        viewModel.tc3SampleRunBlocking()
     }
 
     override fun onResume() {
@@ -52,35 +54,35 @@ class MainActivity : AppCompatActivity() {
 
     /*
     Test case 1:
-    This is to show how suspend funcs work:
+    This is to show how suspend fun works:
      */
-    private fun sampleSuspendFunc() {
-        Log.d(TAG, "sampleSuspendFunc")
+    private fun tc1SampleSuspendFunc() {
+        Log.d(TAG, "tc1SampleSuspendFunc")
 
         GlobalScope.launch {
             val time = measureTimeMillis {
-                val one = sampleOne()
-                val two = sampleTwo()
-                Log.d(TAG, "sampleSuspendFunc: The answer is ${one + two}")
+                val one = tc1SampleOne()
+                val two = tc1SampleTwo()
+                Log.d(TAG, "tc1SampleSuspendFunc: The answer is ${one + two}")
             }
 
-            Log.d(TAG, "sampleSuspendFunc: Completed in $time ms")
+            Log.d(TAG, "tc1SampleSuspendFunc: Completed in $time ms")
         }
 
         // This should go before the above block:
-        Log.d(TAG, "sampleSuspendFunc: EOF")
+        Log.d(TAG, "tc1SampleSuspendFunc: EOF")
     }
 
-    private suspend fun sampleOne(): Int {
-        Log.d(TAG, "sampleOne: currentTimeMillis=" + System.currentTimeMillis())
+    private suspend fun tc1SampleOne(): Int {
+        Log.d(TAG, "tc1SampleOne: currentTimeMillis=" + System.currentTimeMillis())
 
         delay(1000L) // pretend we are doing something useful here
 
         return 1000
     }
 
-    private suspend fun sampleTwo(): Int {
-        Log.d(TAG, "sampleTwo: currentTimeMillis=" + System.currentTimeMillis())
+    private suspend fun tc1SampleTwo(): Int {
+        Log.d(TAG, "tc1SampleTwo: currentTimeMillis=" + System.currentTimeMillis())
 
         delay(2000L) // pretend we are doing something useful here, too
 
